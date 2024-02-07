@@ -3,9 +3,30 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
+import pandas as pd
+from pathlib import Path
+
+# Get the directory where the script is located
+script_directory = Path(__file__).parent
+
+# Function to load data from CSV files
+def load_csv(file_name):
+    # Construct the full path for the CSV file
+    file_path = script_directory / file_name
+    # Read the CSV file using the full path
+    return pd.read_csv(file_path, sep=';')
+
+# Function to load data from Excel files
+def load_excel(file_name):
+    # Construct the full path for the Excel file
+    file_path = script_directory / file_name
+    # Read the Excel file using the full path
+    return pd.read_excel(file_path)
+
 # Chargement des données
-equipements_df = pd.read_csv('Liste des equipement.csv', sep=";")
-mapping_df = pd.read_excel('Jointure attributs code famille.xlsx')
+equipements_df = load_csv('Liste des equipement.csv')
+mapping_df = load_excel('Jointure attributs code famille.xlsx')
+
 
 # Fonction pour filtrer les données
 def filter_data(code_superviseur, code_famille):
@@ -32,7 +53,7 @@ st.plotly_chart(fig_hist)
 
 # Affichage de la liste des équipements
 st.subheader('Liste des équipements')
-columns_to_display = ['A', 'B', 'C', 'D', 'G', 'H', 'I', 'J', 'M', 'T']
+columns_to_display = ['1', '2', '3', '4', '7', '8', '9', '10', '13', '20']  # Correspondant à A, B, C, D, G, H, I, J, M, T
 st.write(filtered_data[columns_to_display])
 
 # Affichage des pie charts
