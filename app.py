@@ -31,7 +31,7 @@ if uploaded_file is not None:
    
 
 mapping_df = load_excel('Jointure attributs code famille.xlsx')
-map = load_excel('IRSI_statut.XLSX')
+map = load_excel('IRSI_statut.xlsx')
 
 map['IRSI'] = map['IRSI'].astype(str).str.split('.').str[0]
 map = dict(zip(map.IRSI, map.statut))
