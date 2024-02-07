@@ -24,9 +24,18 @@ def load_excel(file_name):
     return pd.read_excel(file_path)
 
 # Chargement des données
-equipements_df = load_csv('Liste des equipement.csv')
-mapping_df = load_excel('Jointure attributs code famille.xlsx')
 
+uploaded_file = st.file_uploader("Upload du fichier CSV", type=['csv'])
+if uploaded_file is not None:
+    equipements_df = pd.read_csv(uploaded_file, sep=';')
+   
+
+mapping_df = load_excel('Jointure attributs code famille.xlsx')
+map = load_excel('IRSI_statut.XLSX')
+
+map['IRSI'] = map['IRSI'].astype(str).str.split('.').str[0]
+map = dict(zip(map.IRSI, map.statut))
+equipements_df['statut_site'] = equipements_df['IRSI'].map(map)
 
 # Fonction pour filtrer les données
 def filter_data(code_superviseur, code_famille):
