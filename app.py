@@ -29,7 +29,7 @@ def load_excel(file_name):
 uploaded_file = st.file_uploader("Upload du fichier CSV", type=['csv'])
 if uploaded_file is not None:
     equipements_df = pd.read_csv(uploaded_file, sep=';')
-    st.write(equipements_df)
+    st.dataframe(equipements_df)
     
     
 
