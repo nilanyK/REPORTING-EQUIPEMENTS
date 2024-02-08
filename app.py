@@ -29,22 +29,7 @@ def load_excel(file_name):
 uploaded_file = st.file_uploader("Upload du fichier CSV", type=['csv'])
 if uploaded_file is not None:
     equipements_df = pd.read_csv(uploaded_file, sep=';')
-    mapping_df = load_excel('Jointure attributs code famille.xlsx')
-    map = load_excel('IRSI_statut.xlsx')
-    
-    map['IRSI'] = map['IRSI'].astype(str).str.split('.').str[0]
-    map = dict(zip(map.IRSI, map.statut))
-    equipements_df['statut_site'] = equipements_df['IRSI'].map(map)
-    # Filtrer les données selon les conditions spécifiées
-    filtered_df = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')]
-    
-    # Grouper par Code superviseur et compter le nombre d'équipements
-    grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
-    
-    # Créer l'histogramme avec Plotly
-    fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d\'équipements de site inactifs dont le statut n'est pas hors contrat")
-    st.plotly_chart(fig)
-
+    st.write(equipements_df)
     
     
 
