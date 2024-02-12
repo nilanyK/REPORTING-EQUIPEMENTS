@@ -118,12 +118,22 @@ def analyse_equipements():
     nombre_moyen_par_superviseur = total_equipements / equipements_df['Code superviseur'].nunique()
 
     # Création des cartes de résumé
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
-        st.metric("Nombre Total d'Équipements", total_equipements)
+        # Calculs pour le camembert
+        inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
+        inactifs_non_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')].shape[0]
+    
+        # Données pour le camembert
+        labels = ['Inactifs - Hors Contrat', 'Inactifs - Non Hors Contrat']
+        values = [inactifs_hors_contrat, inactifs_non_hors_contrat]
+
+        # Création du camembert avec Plotly
+        fig = px.pie(names=labels, values=values, title="Répartition des Équipements Inactifs")
+        
+        # Affichage du camembert
+        st.plotly_chart(fig)
     with col2:
-        st.metric("Équipements Inactifs", f"{pourcentage_inactifs:.2f}%")
-    with col3:
         st.metric("Moyenne par Superviseur", f"{nombre_moyen_par_superviseur:.2f}")
 
     # Création d'un tableau interactif
