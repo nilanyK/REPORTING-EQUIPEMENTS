@@ -12,7 +12,6 @@ def download_file_from_google_drive(file_id, output_file):
 def read_csv_file(file_path):
     return pd.read_csv(file_path)
 
-st.title('CSV File Reader from Google Drive')
 
     # Input field to enter Google Drive file ID
 file_id = "1khHggRA-DKIz4W6x2Ac1n9A0VDZ3XLAC"
