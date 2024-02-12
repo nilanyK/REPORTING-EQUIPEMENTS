@@ -4,6 +4,8 @@ import plotly.express as px
 from pathlib import Path
 from PIL import Image
 
+st.set_page_config(layout="wide")
+
 # Get the directory where this script resides
 script_directory = Path(__file__).parent
 
@@ -52,7 +54,7 @@ h2 {
 """
 
 # Apply custom CSS
-st.set_page_config(layout="wide")
+
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # Construct the full path for the image file
