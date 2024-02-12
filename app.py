@@ -121,7 +121,7 @@ def analyse_equipements():
     values = [inactifs_hors_contrat, inactifs_non_hors_contrat]
 
     # Création du camembert avec Plotly
-    fig = px.pie(names=labels, values=values, title="Répartition des Équipements Inactifs")
+    fig = px.pie(names=labels, values=values, title="Répartition des Équipements des Sites Inactifs")
         
     # Affichage du camembert
     st.plotly_chart(fig)
