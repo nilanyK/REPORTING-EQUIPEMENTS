@@ -97,6 +97,6 @@ def analyse_equipements():
     st.plotly_chart(fig)
 
 # Call the corresponding function based on the selected term
-if selected_term == "Analyse des équipements":
+if selected_term == "Sites inactifs & Hors-Contrat":
     analyse_equipements()
 
