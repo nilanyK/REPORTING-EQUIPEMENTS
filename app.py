@@ -6,7 +6,9 @@ import gdown
 @st.cache
 def download_file_from_google_drive(file_id, output_file):
     url = f'https://drive.google.com/uc?id={file_id}'
-    gdown.download(url, output_file, quiet=False)
+    response = requests.get(url)
+    with open(output_file, 'wb') as f:
+        f.write(response.content)
 
 # Function to read the CSV file
 def read_csv_file(file_path):
