@@ -30,9 +30,6 @@ def read_and_concat_chunks():
 # Call the function to read and concatenate chunks
 equipements_df = read_and_concat_chunks()
 
-# Set page title and favicon
-st.set_page_config(page_title="Dashboard Equipements", page_icon=":chart_with_upwards_trend:")
-
 # Custom CSS style
 custom_css = """
 <style>
