@@ -1,9 +1,34 @@
+import pandas as pd
 import streamlit as st
-from PIL import Image
+import plotly.express as px
 from pathlib import Path
-
-# Define the directory where this script resides
+from PIL import Image
+# Get the directory where this script resides
 script_directory = Path(__file__).parent
+
+num_chunks = 9
+
+# Define a function to read and concatenate all CSV file chunks
+@st.cache
+def read_and_concat_chunks():
+    # Initialize an empty DataFrame to hold all chunks
+    combined_df = pd.DataFrame()
+
+    # Iterate over each CSV file chunk
+    for file_index in range(1, num_chunks + 1):
+        # Construct the file path for the CSV chunk
+        csv_file_path = script_directory / f'data_chunk_{file_index}.csv'
+
+        # Read the CSV chunk into a DataFrame
+        chunk_df = pd.read_csv(csv_file_path)
+
+        # Concatenate the chunk to the combined DataFrame
+        combined_df = pd.concat([combined_df, chunk_df], ignore_index=True)
+
+    return combined_df
+
+# Call the function to read and concatenate chunks
+equipements_df = read_and_concat_chunks()
 
 # Custom CSS to inject fonts and colors
 custom_css = """
@@ -28,23 +53,18 @@ h2 {
 # Apply custom CSS
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Load the image
-image_path = script_directory / 'lpi.png' # Make sure to use the correct file name
-image = Image.open(image_path)
 
-# Resize the image if needed (this example resizes to 200x200)
-# You can adjust the size as needed
-image = image.resize((200, 200))
+# Construct the full path for the image file
+image_file_path = script_directory / 'lpi.png'
 
-# Display the image in Streamlit using the PIL Image object
-# Removed use_column_width to use the actual size of the image
-st.image(image)
+# Load the image into a PIL Image object
+image = Image.open(image_file_path)
+
+# Now display the image in Streamlit using the PIL Image object
+st.image(image, use_column_width=True)
 
 # Set app title
 st.title("Dashboard Equipements")
-
-# Add a subtitle
-st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
 
 # Add a subtitle
 st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
