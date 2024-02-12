@@ -15,14 +15,14 @@ def read_csv_file(file_path):
 st.title('CSV File Reader from Google Drive')
 
     # Input field to enter Google Drive file ID
-file_id = st.text_input('Enter Google Drive File ID:')
+file_id = "1khHggRA-DKIz4W6x2Ac1n9A0VDZ3XLAC"
 
 if file_id:
     try:
         # Download the file
         st.info("Downloading file from Google Drive...")
         file_path = 'Liste des equipement.csv'  # You can change the name here if needed
-        download_file_from_google_drive("1khHggRA-DKIz4W6x2Ac1n9A0VDZ3XLAC", file_path)
+        download_file_from_google_drive(file_id, file_path)
             
         # Read the CSV file
         st.success("File downloaded successfully!")
