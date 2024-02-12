@@ -126,10 +126,13 @@ def analyse_equipements():
     # Affichage du camembert
     st.plotly_chart(fig)
 
+    colonnes_a_afficher = [0, 1, 2, 3, 6, 7, 8, 9, 12, 19]
 
+    # Sélection des colonnes spécifiques par leur indice
+    df_filtered_columns = filtered_df.iloc[:, colonnes_a_afficher]
     # Création d'un tableau interactif
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
-    st.dataframe(filtered_df.assign(hack='').set_index('hack'))
+    st.dataframe(df_filtered_columns)
 # Assurez-vous d'appeler la fonction avec le DataFrame correct
 # analyse_equipements(equipements_df)
 
