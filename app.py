@@ -108,9 +108,11 @@ def analyse_equipements():
         st.plotly_chart(fig)
 
     with col2:
-        # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
-        st.metric(label="Code Superviseur avec le plus d'équipements", value=max_equipements['Code superviseur'])
-        st.metric(label="Nombre d'équipements", value=max_equipements['Nombre d\'équipements'])
+        # Utiliser markdown pour éviter la troncature du texte
+        st.markdown(f"#### Code Superviseur avec le plus d'équipements inactifs")
+        st.markdown(f"**{max_equipements['Code superviseur']}**")
+        st.markdown(f"#### Nombre d'équipements")
+        st.markdown(f"**{max_equipements['Nombre d\'équipements']}**")
 
 # Assurez-vous d'appeler la fonction avec le DataFrame correct
 # analyse_equipements(equipements_df)
