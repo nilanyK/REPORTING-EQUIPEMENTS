@@ -109,11 +109,10 @@ def analyse_equipements():
 
     with col2:
         # Utiliser markdown pour éviter la troncature du texte
-        st.markdown(f"#### Code Superviseur avec le plus d'équipements inactifs")
+        st.markdown("#### Code Superviseur avec le plus d'équipements inactifs")
         st.markdown(f"**{max_equipements['Code superviseur']}**")
-        st.markdown(f"#### Nombre d'équipements")
-        st.markdown(f"**{max_equipements['Nombre d\'équipements']}**")
-
+        st.markdown("#### Nombre d'équipements")
+        st.markdown(f"**{max_equipements['Nombre d'équipements']}**")
 # Assurez-vous d'appeler la fonction avec le DataFrame correct
 # analyse_equipements(equipements_df)
 
