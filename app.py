@@ -56,7 +56,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 # Construct the full path for the image file
 image_file_path = script_directory / 'lpi.png'
-image = Image.open(image_path)
+image = Image.open(image_file_path)
 
 # Desired width for the image
 new_width = 200
