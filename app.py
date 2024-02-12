@@ -56,8 +56,17 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 # Construct the full path for the image file
 image_file_path = script_directory / 'lpi.png'
+image = Image.open(image_path)
 
-st.image(image_file_path, width=200)
+# Desired width for the image
+new_width = 200
+
+# Calculate the new height to maintain the aspect ratio
+aspect_ratio = image.height / image.width
+new_height = int(new_width * aspect_ratio)
+
+# Resize the image
+image = image.resize((new_width, new_height))
 
 # Set app title
 st.title("Dashboard Equipements")
