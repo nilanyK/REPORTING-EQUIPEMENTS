@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 from pathlib import Path
-
+from PIL import Image
 # Get the directory where this script resides
 script_directory = Path(__file__).parent
 
