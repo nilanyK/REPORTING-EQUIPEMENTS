@@ -4,7 +4,7 @@ import gdown
 
 # Function to download the CSV file from Google Drive
 def download_file_from_google_drive(file_id, output_file):
-    url = f'https://drive.google.com/uc?id={1khHggRA-DKIz4W6x2Ac1n9A0VDZ3XLAC}'
+    url = f'https://drive.google.com/uc?id={file_id}'
     gdown.download(url, output_file, quiet=False)
 
 # Function to read the CSV file
@@ -22,7 +22,7 @@ def main():
             # Download the file
             st.info("Downloading file from Google Drive...")
             file_path = 'data.csv'  # You can change the name here if needed
-            download_file_from_google_drive(file_id, file_path)
+            download_file_from_google_drive("1khHggRA-DKIz4W6x2Ac1n9A0VDZ3XLAC", file_path)
             
             # Read the CSV file
             st.success("File downloaded successfully!")
