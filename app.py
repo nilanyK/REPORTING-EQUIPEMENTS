@@ -111,6 +111,24 @@ def analyse_equipements():
         # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
         st.metric(label="Superviseur", value=max_equipements['Code superviseur'])
         st.metric(label="Equipements de sites inactifs non HC", value=max_equipements['Nombre d\'équipements'])
+
+    total_equipements = len(equipements_df)
+    total_inactifs = len(equipements_df[equipements_df['statut_site'] == 'inactif'])
+    pourcentage_inactifs = (total_inactifs / total_equipements) * 100
+    nombre_moyen_par_superviseur = total_equipements / equipements_df['Code superviseur'].nunique()
+
+    # Création des cartes de résumé
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Nombre Total d'Équipements", total_equipements)
+    with col2:
+        st.metric("Équipements Inactifs", f"{pourcentage_inactifs:.2f}%")
+    with col3:
+        st.metric("Moyenne par Superviseur", f"{nombre_moyen_par_superviseur:.2f}")
+
+    # Création d'un tableau interactif
+    st.write("Liste des Équipements de sites inactifs non Hors Contrat")
+    st.dataframe(filtered_df.assign(hack='').set_index('hack'))
 # Assurez-vous d'appeler la fonction avec le DataFrame correct
 # analyse_equipements(equipements_df)
 
