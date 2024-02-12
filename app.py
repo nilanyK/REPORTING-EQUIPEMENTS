@@ -110,7 +110,7 @@ def analyse_equipements():
     with col2:
         # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
         st.metric(label="Superviseur", value=max_equipements['Code superviseur'])
-        st.metric(label="Nombre d'équipements de sites inactifs non HC", value=max_equipements['Nombre d\'équipements'])
+        st.metric(label="Equipements de sites inactifs non HC", value=max_equipements['Nombre d\'équipements'])
 # Assurez-vous d'appeler la fonction avec le DataFrame correct
 # analyse_equipements(equipements_df)
 
