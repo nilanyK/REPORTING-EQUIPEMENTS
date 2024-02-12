@@ -72,21 +72,31 @@ new_height = int(new_width * aspect_ratio)
 image = image.resize((new_width, new_height))
 # Display the image in Streamlit
 st.image(image)
+
+# Sidebar with terms 
+selected_term = st.sidebar.radio("Onglets : ", ["Analyse des équipements","Prediction & Explanation", "Information Retrieval", "QA"])
+
 # Set app title
 st.title("Dashboard Equipements")
 
-# Add a subtitle
-st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
+def analyse_equipements:
+    # Add a subtitle
+    st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
+    
+    # Filtrer les données selon les conditions spécifiées
+    filtered_df = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')]
+    
+    # Grouper par Code superviseur et compter le nombre d'équipements
+    grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
+    
+    # Créer l'histogramme avec Plotly
+    fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d\'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
+    # Modifier la mise en page du graphique
+    fig.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
+    # Afficher le graphique dans Streamlit
+    st.plotly_chart(fig)
 
-# Filtrer les données selon les conditions spécifiées
-filtered_df = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')]
+# Call the corresponding function based on the selected term
+if selected_term == "Analyse des équipements":
+    analyse_equipements()
 
-# Grouper par Code superviseur et compter le nombre d'équipements
-grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
-
-# Créer l'histogramme avec Plotly
-fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d\'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
-# Modifier la mise en page du graphique
-fig.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
-# Afficher le graphique dans Streamlit
-st.plotly_chart(fig)
