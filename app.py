@@ -46,6 +46,15 @@ h2 {
 # Apply custom CSS
 st.markdown(custom_css, unsafe_allow_html=True)
 
+# Construct the full path for the image file
+image_file_path = script_directory / 'lpi.png'
+
+# Load the image into a PIL Image object
+image = Image.open(image_file_path)
+
+# Now display the image in Streamlit using the PIL Image object
+st.image(image, use_column_width=True)
+
 # Set app title
 st.title("Dashboard Equipements")
 
