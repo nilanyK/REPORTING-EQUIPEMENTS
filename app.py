@@ -51,6 +51,7 @@ h2 {
 """
 
 # Apply custom CSS
+st.set_page_config(layout="wide")
 st.markdown(custom_css, unsafe_allow_html=True)
 
 
