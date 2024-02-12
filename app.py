@@ -5,6 +5,7 @@ from pathlib import Path
 # Get the directory where this script resides
 script_directory = Path(__file__).parent
 
+num_chunks=9
 # Define a function to read and concatenate all CSV file chunks
 @st.cache
 def read_and_concat_chunks():
