@@ -79,7 +79,7 @@ selected_term = st.sidebar.radio("Onglets : ", ["Analyse des équipements","Pred
 # Set app title
 st.title("Dashboard Equipements")
 
-def analyse_equipements:
+def analyse_equipements():
     # Add a subtitle
     st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
     
