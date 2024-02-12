@@ -38,13 +38,13 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 h1 {
-    color: #4CAF50; /* Adjusted to match the color in the uploaded image */
+    color: #00573F; /* Adjusted to match the color in the uploaded image */
     font-family: 'Montserrat', sans-serif;
     font-size: 3em; /* You can adjust the size if necessary */
 }
 h2 {
     font-family: 'Montserrat', sans-serif;
-    color: #1976D2; /* Adjusted to match the color in the uploaded image */
+    color: #36bc7b; /* Adjusted to match the color in the uploaded image */
     font-size: 2em; /* You can adjust the size if necessary */
 }
 </style>
