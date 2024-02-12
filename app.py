@@ -102,39 +102,30 @@ def analyse_equipements():
 
     # Utiliser des colonnes pour placer le graphique à gauche et l'indicateur à droite
     col1, col2 = st.columns([3, 1])
-
+    moyenne_par_superviseur = grouped_df['Nombre d\'équipements'].mean()
     with col1:
         # Afficher le graphique dans Streamlit
         st.plotly_chart(fig)
 
     with col2:
         # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
-        st.metric(label="Superviseur", value=max_equipements['Code superviseur'])
-        st.metric(label="Equipements de sites inactifs non HC", value=max_equipements['Nombre d\'équipements'])
-
-    total_equipements = len(equipements_df)
-    total_inactifs = len(equipements_df[equipements_df['statut_site'] == 'inactif'])
-    pourcentage_inactifs = (total_inactifs / total_equipements) * 100
-    nombre_moyen_par_superviseur = total_equipements / equipements_df['Code superviseur'].nunique()
-
-    # Création des cartes de résumé
-    col1, col2 = st.columns(2)
-    with col1:
-        # Calculs pour le camembert
-        inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
-        inactifs_non_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')].shape[0]
-    
-        # Données pour le camembert
-        labels = ['Inactifs - Hors Contrat', 'Inactifs - Non Hors Contrat']
-        values = [inactifs_hors_contrat, inactifs_non_hors_contrat]
-
-        # Création du camembert avec Plotly
-        fig = px.pie(names=labels, values=values, title="Répartition des Équipements Inactifs")
+        st.metric(label="Moyenne par superviseur", value=moyenne_par_superviseur)
         
-        # Affichage du camembert
-        st.plotly_chart(fig)
-    with col2:
-        st.metric("Moyenne par Superviseur", f"{nombre_moyen_par_superviseur:.2f}")
+
+
+    inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
+    inactifs_non_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')].shape[0]
+    
+    # Données pour le camembert
+    labels = ['Inactifs - Hors Contrat', 'Inactifs - Non Hors Contrat']
+    values = [inactifs_hors_contrat, inactifs_non_hors_contrat]
+
+    # Création du camembert avec Plotly
+    fig = px.pie(names=labels, values=values, title="Répartition des Équipements Inactifs")
+        
+    # Affichage du camembert
+    st.plotly_chart(fig)
+
 
     # Création d'un tableau interactif
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
