@@ -30,6 +30,31 @@ def read_and_concat_chunks():
 # Call the function to read and concatenate chunks
 equipements_df = read_and_concat_chunks()
 
+# Set page title and favicon
+st.set_page_config(page_title="Dashboard Equipements", page_icon=":chart_with_upwards_trend:")
+
+# Custom CSS style
+custom_css = """
+<style>
+h1 {
+    color: #4CAF50;
+    font-size: 3em;
+}
+h2 {
+    color: #1976D2;
+    font-size: 2em;
+}
+</style>
+"""
+# Apply custom CSS
+st.markdown(custom_css, unsafe_allow_html=True)
+
+# Set app title
+st.title("Dashboard Equipements")
+
+# Add a subtitle
+st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
+
 # Filtrer les données selon les conditions spécifiées
 filtered_df = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')]
 
@@ -37,6 +62,8 @@ filtered_df = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equ
 grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
 
 # Créer l'histogramme avec Plotly
-fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d\'équipements de site inactifs dont le statut n'est pas hors contrat")
+fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d\'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
+# Modifier la mise en page du graphique
+fig.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
 # Afficher le graphique dans Streamlit
 st.plotly_chart(fig)
