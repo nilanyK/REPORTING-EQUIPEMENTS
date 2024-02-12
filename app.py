@@ -1,39 +1,22 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
+import requests
+from io import StringIO
 
-import pandas as pd
-from pathlib import Path
+# New function to download a file from Google Drive directly
+def download_file_from_google_drive(file_id):
+    url = f"https://drive.google.com/uc?id={file_id}&export=download"
+    session = requests.Session()
+    response = session.get(url, allow_redirects=True)
+    return StringIO(response.text)
 
-# Get the directory where the script is located
-script_directory = Path(__file__).parent
-
-# Function to load data from CSV files
 @st.cache
-def load_csv(file_name):
-    # Construct the full path for the CSV file
-    file_path = script_directory / file_name
-    # Read the CSV file using the full path
-    return pd.read_csv(file_path, sep=';')
+def load_data_from_google_drive(file_id):
+    csv_raw = download_file_from_google_drive(file_id)
+    return pd.read_csv(csv_raw, sep=';')
 
-# Function to load data from Excel files
-@st.cache
-def load_excel(file_name):
-    # Construct the full path for the Excel file
-    file_path = script_directory / file_name
-    # Read the Excel file using the full path
-    return pd.read_excel(file_path)
 
-# Chargement des données
-uploaded_file = st.file_uploader("Upload du fichier CSV", type=['csv'])
-if uploaded_file is not None:
-    equipements_df = pd.read_csv(uploaded_file, sep=';')
-    st.dataframe(equipements_df)
-    
-    
-
-    
-   
-    
-  
+if st.button('Load Data :'):
+    file_id = '1khHggRA-DKIz4W6x2Ac1n9A0VDZ3XLAC'  # Extracted from your shared link
+    equipements_df = load_data_from_google_drive(file_id)
+    st.dataframe(equipements_df.head(10))
