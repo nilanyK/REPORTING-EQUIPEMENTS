@@ -1,38 +1,31 @@
-import streamlit as st
 import pandas as pd
-import gdown
-import requests
+import streamlit as st
+from pathlib import Path
 
-# Function to download the CSV file from Google Drive
+# Get the directory where this script resides
+script_directory = Path(__file__).parent
+
+# Define a function to read and concatenate all CSV file chunks
 @st.cache
-def download_file_from_google_drive(file_id, output_file):
-    url = f'https://drive.google.com/uc?id={file_id}'
-    response = requests.get(url)
-    with open(output_file, 'wb') as f:
-        f.write(response.content)
+def read_and_concat_chunks():
+    # Initialize an empty DataFrame to hold all chunks
+    combined_df = pd.DataFrame()
 
-# Function to read the CSV file
-def read_csv_file(file_path):
-    return pd.read_csv(file_path)
+    # Iterate over each CSV file chunk
+    for file_index in range(1, num_chunks + 1):
+        # Construct the file path for the CSV chunk
+        csv_file_path = script_directory / f'data_chunk_{file_index}.csv'
 
+        # Read the CSV chunk into a DataFrame
+        chunk_df = pd.read_csv(csv_file_path)
 
-    # Input field to enter Google Drive file ID
-file_id = "1khHggRA-DKIz4W6x2Ac1n9A0VDZ3XLAC"
+        # Concatenate the chunk to the combined DataFrame
+        combined_df = pd.concat([combined_df, chunk_df], ignore_index=True)
 
-if file_id:
-    try:
-        # Download the file
-        st.info("Downloading file from Google Drive...")
-        file_path = 'Liste des equipement.csv'  # You can change the name here if needed
-        download_file_from_google_drive(file_id, file_path)
-            
-        # Read the CSV file
-        st.success("File downloaded successfully!")
-        st.info("Reading CSV file...")
-        df = read_csv_file(file_path)
-            
-        # Display the DataFrame
-        st.write(df)
-    except Exception as e:
-        st.error(f"Error: {e}")
+    return combined_df
 
+# Call the function to read and concatenate chunks
+combined_df = read_and_concat_chunks()
+
+# Display the head of the combined DataFrame
+st.write(combined_df.head())
