@@ -79,6 +79,8 @@ selected_term = st.sidebar.radio("Onglets : ", ["Sites inactifs & Hors-Contrat",
 # Set app title
 st.title("Dashboard Equipements")
 
+
+
 def analyse_equipements():
     # Add a subtitle
     st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
@@ -89,12 +91,30 @@ def analyse_equipements():
     # Grouper par Code superviseur et compter le nombre d'équipements
     grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
     
+    # Trouver le Code superviseur avec le nombre maximum d'équipements
+    max_equipements = grouped_df.loc[grouped_df['Nombre d\'équipements'].idxmax()]
+
     # Créer l'histogramme avec Plotly
-    fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d\'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
+    fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
+    
     # Modifier la mise en page du graphique
     fig.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
-    # Afficher le graphique dans Streamlit
-    st.plotly_chart(fig)
+
+    # Utiliser des colonnes pour placer le graphique à gauche et l'indicateur à droite
+    col1, col2 = st.columns([3, 1])
+
+    with col1:
+        # Afficher le graphique dans Streamlit
+        st.plotly_chart(fig)
+
+    with col2:
+        # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
+        st.metric(label="Code Superviseur avec le plus d'équipements", value=max_equipements['Code superviseur'])
+        st.metric(label="Nombre d'équipements", value=max_equipements['Nombre d\'équipements'])
+
+# Assurez-vous d'appeler la fonction avec le DataFrame correct
+# analyse_equipements(equipements_df)
+
 
 # Call the corresponding function based on the selected term
 if selected_term == "Sites inactifs & Hors-Contrat":
