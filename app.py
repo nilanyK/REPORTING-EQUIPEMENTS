@@ -67,7 +67,8 @@ new_height = int(new_width * aspect_ratio)
 
 # Resize the image
 image = image.resize((new_width, new_height))
-
+# Display the image in Streamlit
+st.image(image)
 # Set app title
 st.title("Dashboard Equipements")
 
