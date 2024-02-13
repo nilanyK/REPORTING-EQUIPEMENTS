@@ -125,23 +125,31 @@ def analyse_equipements():
 
     # Utiliser des colonnes pour placer le graphique à gauche et l'indicateur à droite
     col1, col2 = st.columns([2, 1])
-    moyenne_par_superviseur = grouped_df['Nombre d\'équipements'].mean()
-    moyenne_par_lot= grouped_df_lot['Nombre d\'équipements'].mean()
+    
+    # Afficher le graphique dans la première colonne
     with col1:
-        # Afficher le graphique dans Streamlit
         st.plotly_chart(fig1)
-
+    
+    # Calculer la moyenne par superviseur
+    moyenne_par_superviseur = grouped_df['Nombre d\'équipements'].mean()
+    
+    # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements dans la deuxième colonne
     with col2:
-        moyenne_par_superviseur = grouped_df['Nombre d\'équipements'].mean()
-
+        st.metric(label="Moyenne par superviseur", value=moyenne_par_superviseur)
+    
+    # Utiliser des colonnes pour placer le graphique à gauche et l'indicateur à droite
     col3, col4 = st.columns([2, 1])
+    
+    # Afficher le graphique dans la troisième colonne
     with col3:
-        # Afficher le graphique dans Streamlit
         st.plotly_chart(fig2)
+    
+    # Calculer la moyenne par lot (assuming grouped_df_lot is defined somewhere)
+    moyenne_par_lot = grouped_df_lot['Nombre d\'équipements'].mean()
+    
+    # Afficher l'indicateur de la moyenne par lot dans la quatrième colonne
     with col4:
-        # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
         st.metric(label="Moyenne par lot", value=moyenne_par_lot)
-        
 
 
     inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
