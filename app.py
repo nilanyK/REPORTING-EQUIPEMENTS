@@ -172,13 +172,16 @@ def code_famille():
     # Afficher les colonnes spécifiées
     st.dataframe(equipements_famille_selected.reset_index(drop=True))
     
+    colors = ['#00573F', '#36bc7b']
+
     # Créer un histogramme avec Plotly
     attributs_names = []
     non_null_counts = []
     for attribut in attributs_test:
         attributs_names.append(attribut)
         non_null_counts.append(equipements_famille[attribut].notna().sum())
-    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts)])
+    
+    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts, marker_color=colors[0])])
     fig_hist.update_xaxes(title_text='Attributs')
     fig_hist.update_yaxes(title_text='Nombre de valeurs renseignées')
     fig_hist.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test))
@@ -191,7 +194,7 @@ def code_famille():
         non_renseigne_percentage = 100 - renseigne_percentage
         labels = ['Renseigné', 'Non renseigné']
         values = [renseigne_percentage, non_renseigne_percentage]
-        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
+        fig = go.Figure(data=[go.Pie(labels=labels, values=values, marker_colors=colors)])
         fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
         st.plotly_chart(fig)
 
