@@ -57,6 +57,13 @@ h2 {
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
+import json
+
+mapping_dict_path = script_directory / 'mapping_dict.json.json'
+# Lire le dictionnaire depuis le fichier JSON
+with open('mapping_dict_path', 'r') as f:
+    mapping_dict = json.load(f)
+    
 # Construct the full path for the image file
 image_file_path = script_directory / 'lpi.png'
 image = Image.open(image_file_path)
@@ -133,11 +140,60 @@ def analyse_equipements():
     # Création d'un tableau interactif
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
     st.dataframe(df_filtered_columns.reset_index(drop=True))
-# Assurez-vous d'appeler la fonction avec le DataFrame correct
-# analyse_equipements(equipements_df)
+
+
+
+def code_famille():
+    # Créer un menu déroulant (select) pour choisir le code famille
+    code_famille_test = st.selectbox("Choisissez un code famille :", list(mapping_dict.keys()))
+    
+    # Sélectionner les attributs correspondant au code famille testé
+    attributs_test = mapping_dict[code_famille_test]
+    
+    # Filtrer les données du DataFrame sur le code famille sélectionné
+    equipements_famille = equipements_df[equipements_df['Code famille'] == code_famille_test]
+    
+    # Sélectionner les colonnes spécifiées par leur index
+    colonnes_indices = [0, 1, 2, 3, 6, 7, 8, 9, 12, 19]  # Index des colonnes A, B, C, D, G, H, I, J, M, T
+    equipements_famille_selected = equipements_famille.iloc[:, colonnes_indices]
+    
+    # Afficher les colonnes spécifiées
+    st.write(equipements_famille_selected)
+    
+    # Créer un histogramme avec Plotly
+    attributs_names = []
+    non_null_counts = []
+    for attribut in attributs_test:
+        attributs_names.append(attribut)
+        non_null_counts.append(equipements_famille[attribut].notna().sum())
+    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts)])
+    fig_hist.update_xaxes(title_text='Attributs')
+    fig_hist.update_yaxes(title_text='Nombre de valeurs renseignées')
+    fig_hist.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test))
+    st.plotly_chart(fig_hist)
+    
+    # Créer un pie chart pour chaque attribut avec Plotly
+    figs = []
+    for attribut, non_null_count in zip(attributs_test, non_null_counts):
+        renseigne_percentage = (non_null_count / len(equipements_famille)) * 100
+        non_renseigne_percentage = 100 - renseigne_percentage
+        labels = ['Renseigné', 'Non renseigné']
+        values = [renseigne_percentage, non_renseigne_percentage]
+        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
+        fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
+        figs.append(fig)
+    
+    # Afficher les graphiques en secteurs
+    for fig in figs:
+        st.plotly_chart(fig)
+
+
 
 
 # Call the corresponding function based on the selected term
 if selected_term == "Sites inactifs & Hors-Contrat":
     analyse_equipements()
+elif selected_term == "Code Famille":
+    code_famille()
+    
 
