@@ -173,10 +173,7 @@ def code_famille():
     fig_hist.update_yaxes(title_text='Nombre de valeurs renseignées')
     fig_hist.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test))
     st.plotly_chart(fig_hist)
-    
-    # Créer un pie chart pour chaque attribut avec Plotly
-    st.dataframe(equipements_famille_selected.reset_index(drop=True))
-    
+
     # Créer un histogramme avec Plotly
     attributs_names = []
     non_null_counts = []
@@ -191,14 +188,23 @@ def code_famille():
     
     # Créer un pie chart pour chaque attribut avec Plotly
     st.markdown("<h2>Pourcentage de valeurs renseignées par attribut</h2>", unsafe_allow_html=True)
-    for attribut, non_null_count in zip(attributs_test, non_null_counts):
-        renseigne_percentage = (non_null_count / len(equipements_famille)) * 100
-        non_renseigne_percentage = 100 - renseigne_percentage
-        labels = ['Renseigné', 'Non renseigné']
-        values = [renseigne_percentage, non_renseigne_percentage]
-        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
-        fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
-        st.plotly_chart(fig)
+    
+    # Organiser les figures en paires
+    pairs = [(attributs_test[i], attributs_test[i+1]) for i in range(0, len(attributs_test), 2)]
+    
+    for pair in pairs:
+        fig_row = go.Figure()
+        for attribut in pair:
+            non_null_count = equipements_famille[attribut].notna().sum()
+            renseigne_percentage = (non_null_count / len(equipements_famille)) * 100
+            non_renseigne_percentage = 100 - renseigne_percentage
+            labels = ['Renseigné', 'Non renseigné']
+            values = [renseigne_percentage, non_renseigne_percentage]
+            fig = go.Pie(labels=labels, values=values)
+            fig_row.add_trace(fig['data'][0])
+            fig_row.update_layout(title='Pourcentage de valeurs renseignées pour les attributs {}'.format(pair))
+        st.plotly_chart(fig_row)
+
 
 
 
