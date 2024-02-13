@@ -144,13 +144,9 @@ def analyse_equipements():
 import plotly.graph_objects as go
 
 def code_famille():
-    # Add a title
-    st.markdown("<h1 style='text-align: center;'>Analyse par code famille</h1>", unsafe_allow_html=True)
-    
     # Add a subtitle
     st.markdown("<h2>Analyse par code famille</h2>", unsafe_allow_html=True)
-    
-    # Créer un menu déroulant pour choisir le code famille
+    # Créer un menu déroulant  pour choisir le code famille
     code_famille_test = st.selectbox("Choisissez un code famille :", list(mapping_dict.keys()))
     
     # Sélectionner les attributs correspondant au code famille testé
@@ -179,7 +175,6 @@ def code_famille():
     st.plotly_chart(fig_hist)
     
     # Créer un pie chart pour chaque attribut avec Plotly
-    st.markdown("<h2>Pourcentage de valeurs renseignées par attribut</h2>", unsafe_allow_html=True)
     figs = []
     for attribut, non_null_count in zip(attributs_test, non_null_counts):
         renseigne_percentage = (non_null_count / len(equipements_famille)) * 100
@@ -190,12 +185,10 @@ def code_famille():
         fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
         figs.append(fig)
     
-    # Afficher les graphiques en secteurs en les divisant en colonnes de 2
-    num_cols = 2
-    num_rows = (len(figs) + num_cols - 1) // num_cols
-    for i in range(num_rows):
-        fig_row = figs[i * num_cols: (i + 1) * num_cols]
-        st.plotly_chart(go.Figure(fig_row), use_container_width=True)
+    # Afficher les graphiques en secteurs
+    for fig in figs:
+        st.plotly_chart(fig)
+
 
 
 
