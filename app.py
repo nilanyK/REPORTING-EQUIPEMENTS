@@ -67,6 +67,11 @@ st.markdown(custom_css, unsafe_allow_html=True)
 # Lire le dictionnaire depuis le fichier JSON
 with open('mapping_dict.json', 'r') as f:
     mapping_dict = json.load(f)
+
+with open('mapping_lot_dict.json', 'r') as f:
+    mapping_dict_lot = json.load(f)
+
+equipements_df['Lot'] = equipements_df['Code superviseur'].map(mapping_dict_lot)
     
 # Construct the full path for the image file
 image_file_path = script_directory / 'lpi.png'
@@ -104,19 +109,31 @@ def analyse_equipements():
     max_equipements = grouped_df.loc[grouped_df['Nombre d\'équipements'].idxmax()]
 
     # Créer l'histogramme avec Plotly
-    fig = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
+    fig1 = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
     
     # Modifier la mise en page du graphique
-    fig.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
+    fig1.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
+
+    # Grouper par lot et compter le nombre d'équipements
+    grouped_df_lot = filtered_df.groupby('Lot').size().reset_index(name='Nombre d\'équipements')
+    
+    # Créer l'histogramme avec Plotly
+    fig2 = px.bar(grouped_df_lot, x='Lot', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
+    
+    # Modifier la mise en page du graphique
+    fig2.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
 
     # Utiliser des colonnes pour placer le graphique à gauche et l'indicateur à droite
     col1, col2 = st.columns([3, 1])
     moyenne_par_superviseur = grouped_df['Nombre d\'équipements'].mean()
     with col1:
         # Afficher le graphique dans Streamlit
-        st.plotly_chart(fig)
+        st.plotly_chart(fig1)
 
     with col2:
+        # Afficher le graphique dans Streamlit
+        st.plotly_chart(fig2)
+    with col3:
         # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
         st.metric(label="Moyenne par superviseur", value=moyenne_par_superviseur)
         
