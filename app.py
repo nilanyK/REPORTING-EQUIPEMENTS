@@ -124,18 +124,23 @@ def analyse_equipements():
     fig2.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
 
     # Utiliser des colonnes pour placer le graphique à gauche et l'indicateur à droite
-    col1, col2 = st.columns([3, 1])
+    col1, col2 = st.columns([2, 1])
     moyenne_par_superviseur = grouped_df['Nombre d\'équipements'].mean()
+    moyenne_par_lot= grouped_df_lot['Nombre d\'équipements'].mean()
     with col1:
         # Afficher le graphique dans Streamlit
         st.plotly_chart(fig1)
 
     with col2:
+        moyenne_par_superviseur = grouped_df['Nombre d\'équipements'].mean()
+
+    col3, col4 = st.columns([2, 1])
+    with col3:
         # Afficher le graphique dans Streamlit
         st.plotly_chart(fig2)
-    with col3:
+    with col4:
         # Afficher l'indicateur du code superviseur avec le plus grand nombre d'équipements
-        st.metric(label="Moyenne par superviseur", value=moyenne_par_superviseur)
+        st.metric(label="Moyenne par lot", value=moyenne_par_lot)
         
 
 
