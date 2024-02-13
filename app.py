@@ -128,26 +128,27 @@ def analyse_equipements():
     
     
 
+    # Calculate the number of inactifs_hors_contrat and inactifs_non_hors_contrat
     inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
     inactifs_non_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')].shape[0]
     
     # Données pour le camembert
     labels = ['Inactifs - Hors Contrat', 'Inactifs - Non Hors Contrat']
     values = [inactifs_hors_contrat, inactifs_non_hors_contrat]
-
+    
     # Création du camembert avec Plotly
-    fig = px.pie(names=labels, values=values, title="Répartition des Équipements des Sites Inactifs")
-        
+    fig = px.pie(names=labels, values=values, title="Répartition des Équipements des Sites Inactifs", color_discrete_sequence=['#00573F', '#36bc7b'])
+    
     # Affichage du camembert
     st.plotly_chart(fig)
-
-    colonnes_a_afficher = [0, 1, 2, 3, 6, 7, 8, 9, 12, 19]
-
+    
+    # Vous pouvez également modifier les couleurs du tableau interactif si nécessaire
     # Sélection des colonnes spécifiques par leur indice
     df_filtered_columns = filtered_df.iloc[:, colonnes_a_afficher]
     # Création d'un tableau interactif
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
     st.dataframe(df_filtered_columns.reset_index(drop=True))
+
 
 def code_famille():
     # Add a subtitle
