@@ -178,23 +178,22 @@ def code_famille():
     for attribut in attributs_test:
         attributs_names.append(attribut)
         non_null_counts.append(equipements_famille[attribut].notna().sum())
-    # Créer un histogramme avec Plotly pour le graphique fig_hist
-    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts, marker_color='#00573F')])
-    
-    # Modifier la mise en page du graphique fig_hist
+    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts)])
     fig_hist.update_xaxes(title_text='Attributs')
     fig_hist.update_yaxes(title_text='Nombre de valeurs renseignées')
     fig_hist.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test))
+    st.plotly_chart(fig_hist)
     
     # Créer un pie chart pour chaque attribut avec Plotly
+    st.markdown("<h2>Pourcentage de valeurs renseignées par attribut</h2>", unsafe_allow_html=True)
     for attribut, non_null_count in zip(attributs_test, non_null_counts):
         renseigne_percentage = (non_null_count / len(equipements_famille)) * 100
         non_renseigne_percentage = 100 - renseigne_percentage
         labels = ['Renseigné', 'Non renseigné']
         values = [renseigne_percentage, non_renseigne_percentage]
-        fig_pie = go.Figure(data=[go.Pie(labels=labels, values=values)])
-        fig_pie.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut), pie=dict(colors=['#00573F', '#36bc7b']))
-        st.plotly_chart(fig_pie)
+        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
+        fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
+        st.plotly_chart(fig)
 
 
 
