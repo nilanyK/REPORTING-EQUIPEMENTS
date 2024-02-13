@@ -141,7 +141,7 @@ def analyse_equipements():
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
     st.dataframe(df_filtered_columns.reset_index(drop=True))
 
-
+import plotly.graph_objects as go
 
 def code_famille():
     # Créer un menu déroulant (select) pour choisir le code famille
