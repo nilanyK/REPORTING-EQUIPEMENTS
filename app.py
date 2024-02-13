@@ -191,9 +191,14 @@ def code_famille():
     
     # Créer un pie chart pour chaque attribut avec Plotly
     st.markdown("<h2>Pourcentage de valeurs renseignées par attribut</h2>", unsafe_allow_html=True)
-    
-    # Organiser les figures en paires
-    pairs = [(attributs_test[i], attributs_test[i+1]) for i in range(0, len(attributs_test), 2)]
+
+    # Vérifier si la longueur de la liste est paire
+    if len(attributs_test) % 2 == 0:
+        # Créer des paires d'attributs pour afficher les graphes pie par colonne de 2
+        pairs = [(attributs_test[i], attributs_test[i+1]) for i in range(0, len(attributs_test), 2)]
+    else:
+        # Si la longueur est impaire, ignorer le dernier attribut pour former des paires
+        pairs = [(attributs_test[i], attributs_test[i+1]) for i in range(0, len(attributs_test) - 1, 2)]
     
     for pair in pairs:
         fig_row = go.Figure()
