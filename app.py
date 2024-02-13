@@ -144,11 +144,14 @@ def analyse_equipements():
     
     # Vous pouvez également modifier les couleurs du tableau interactif si nécessaire
     # Sélection des colonnes spécifiques par leur indice
+    colonnes_a_afficher = [0, 1, 2, 3, 6, 7, 8, 9, 12, 19]
+
+    # Sélection des colonnes spécifiques par leur indice
     df_filtered_columns = filtered_df.iloc[:, colonnes_a_afficher]
     # Création d'un tableau interactif
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
     st.dataframe(df_filtered_columns.reset_index(drop=True))
-
+    
 
 def code_famille():
     # Add a subtitle
