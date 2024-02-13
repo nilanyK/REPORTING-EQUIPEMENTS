@@ -132,7 +132,7 @@ def analyse_equipements():
     df_filtered_columns = filtered_df.iloc[:, colonnes_a_afficher]
     # Création d'un tableau interactif
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
-    st.dataframe(df_filtered_columns)
+    st.dataframe(df_filtered_columns.reset_index(drop=True))
 # Assurez-vous d'appeler la fonction avec le DataFrame correct
 # analyse_equipements(equipements_df)
 
