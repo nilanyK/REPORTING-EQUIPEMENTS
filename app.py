@@ -3,6 +3,8 @@ import streamlit as st
 import plotly.express as px
 from pathlib import Path
 from PIL import Image
+import json
+import plotly.graph_objects as go
 
 st.set_page_config(layout="wide")
 
@@ -12,7 +14,7 @@ script_directory = Path(__file__).parent
 num_chunks = 9
 
 # Define a function to read and concatenate all CSV file chunks
-@st.cache
+@st.cache(allow_output_mutation=True)
 def read_and_concat_chunks():
     # Initialize an empty DataFrame to hold all chunks
     combined_df = pd.DataFrame()
@@ -60,7 +62,6 @@ h2 {
 
 st.markdown(custom_css, unsafe_allow_html=True)
 
-import json
 
 #mapping_dict_path = script_directory / 'mapping_dict.json'
 # Lire le dictionnaire depuis le fichier JSON
@@ -88,8 +89,6 @@ selected_term = st.sidebar.radio("Onglets : ", ["Sites inactifs & Hors-Contrat",
 
 # Set app title
 st.title("Dashboard Equipements")
-
-
 
 def analyse_equipements():
     # Add a subtitle
@@ -144,8 +143,6 @@ def analyse_equipements():
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
     st.dataframe(df_filtered_columns.reset_index(drop=True))
 
-import plotly.graph_objects as go
-
 def code_famille():
     # Add a subtitle
     st.markdown("<h2>Analyse par code famille</h2>", unsafe_allow_html=True)
@@ -189,13 +186,8 @@ def code_famille():
         st.plotly_chart(fig)
 
 
-
-
-
 # Call the corresponding function based on the selected term
 if selected_term == "Sites inactifs & Hors-Contrat":
     analyse_equipements()
 elif selected_term == "Code Famille":
     code_famille()
-    
-
