@@ -108,20 +108,18 @@ def analyse_equipements():
     # Trouver le Code superviseur avec le nombre maximum d'équipements
     max_equipements = grouped_df.loc[grouped_df['Nombre d\'équipements'].idxmax()]
 
-    # Créer l'histogramme avec Plotly
-    fig1 = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
+    # Créer l'histogramme avec Plotly pour le graphique fig1
+    fig1 = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat par Code Superviseur", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'])
     
-    # Modifier la mise en page du graphique
+    # Modifier la mise en page du graphique fig1
     fig1.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
+    
+    # Créer l'histogramme avec Plotly pour le graphique fig2
+    fig2 = px.bar(grouped_df_lot, x='Lot', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat par Lot", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#36bc7b'])
+    
+    # Modifier la mise en page du graphique fig2
+    fig2.update_layout(xaxis_title="Lot", yaxis_title="Nombre d'Équipements")
 
-    # Grouper par lot et compter le nombre d'équipements
-    grouped_df_lot = filtered_df.groupby('Lot').size().reset_index(name='Nombre d\'équipements')
-    
-    # Créer l'histogramme avec Plotly
-    fig2 = px.bar(grouped_df_lot, x='Lot', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"})
-    
-    # Modifier la mise en page du graphique
-    fig2.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
 
     
     st.plotly_chart(fig1)
@@ -176,11 +174,13 @@ def code_famille():
     for attribut in attributs_test:
         attributs_names.append(attribut)
         non_null_counts.append(equipements_famille[attribut].notna().sum())
-    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts)])
+    # Créer un histogramme avec Plotly pour le graphique fig_hist
+    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts, marker_color='#00573F')])
+    
+    # Modifier la mise en page du graphique fig_hist
     fig_hist.update_xaxes(title_text='Attributs')
     fig_hist.update_yaxes(title_text='Nombre de valeurs renseignées')
     fig_hist.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test))
-    st.plotly_chart(fig_hist)
     
     # Créer un pie chart pour chaque attribut avec Plotly
     st.markdown("<h2>Pourcentage de valeurs renseignées par attribut</h2>", unsafe_allow_html=True)
@@ -190,8 +190,9 @@ def code_famille():
         labels = ['Renseigné', 'Non renseigné']
         values = [renseigne_percentage, non_renseigne_percentage]
         fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
-        fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
+        fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut), pie=dict(colors=['#00573F', '#36bc7b']))
         st.plotly_chart(fig)
+
 
 
 # Call the corresponding function based on the selected term
