@@ -187,15 +187,14 @@ def code_famille():
     fig_hist.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test))
     
     # Créer un pie chart pour chaque attribut avec Plotly
-    st.markdown("<h2>Pourcentage de valeurs renseignées par attribut</h2>", unsafe_allow_html=True)
     for attribut, non_null_count in zip(attributs_test, non_null_counts):
         renseigne_percentage = (non_null_count / len(equipements_famille)) * 100
         non_renseigne_percentage = 100 - renseigne_percentage
         labels = ['Renseigné', 'Non renseigné']
         values = [renseigne_percentage, non_renseigne_percentage]
-        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
-        fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut), pie=dict(colors=['#00573F', '#36bc7b']))
-        st.plotly_chart(fig)
+        fig_pie = go.Figure(data=[go.Pie(labels=labels, values=values)])
+        fig_pie.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut), pie=dict(colors=['#00573F', '#36bc7b']))
+        st.plotly_chart(fig_pie)
 
 
 
