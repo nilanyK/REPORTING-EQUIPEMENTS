@@ -32,6 +32,9 @@ def read_and_concat_chunks():
 
 # Call the function to read and concatenate chunks
 equipements_df = read_and_concat_chunks()
+# Convertir la colonne 'Code batiment' en type de données objet (str)
+equipements_df['Code batiment'] = equipements_df['Code batiment'].astype(str)
+
 
 # Custom CSS to inject fonts and colors
 custom_css = """
