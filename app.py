@@ -105,8 +105,8 @@ def analyse_equipements():
     # Grouper par Code superviseur et compter le nombre d'équipements
     grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
     
-    # Trouver le Code superviseur avec le nombre maximum d'équipements
-    max_equipements = grouped_df.loc[grouped_df['Nombre d\'équipements'].idxmax()]
+    # Grouper par Code superviseur et compter le nombre d'équipements
+    grouped_df_lot = filtered_df.groupby('Lot').size().reset_index(name='Nombre d\'équipements')
 
     # Créer l'histogramme avec Plotly pour le graphique fig1
     fig1 = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat par Code Superviseur", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'])
