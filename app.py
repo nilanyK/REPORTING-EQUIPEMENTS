@@ -59,7 +59,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 import json
 
-mapping_dict_path = script_directory / 'mapping_dict.json.json'
+mapping_dict_path = script_directory / 'mapping_dict.json'
 # Lire le dictionnaire depuis le fichier JSON
 with open('mapping_dict_path', 'r') as f:
     mapping_dict = json.load(f)
