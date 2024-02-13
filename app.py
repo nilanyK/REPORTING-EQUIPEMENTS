@@ -184,7 +184,7 @@ def code_famille():
         values = [renseigne_percentage, non_renseigne_percentage]
         fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
         fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
-        figs.append(fig)
+        figs.append(fig.to_json())  # Convertir le graphique en format JSON
     
     # Afficher les graphiques en secteurs en les divisant en colonnes de 2
     num_cols = 2
