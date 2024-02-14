@@ -207,12 +207,18 @@ def code_famille():
     
     colors = ['#36bc7b','#00573F']
 
-    # Créer un histogramme avec Plotly
+    # Créer une liste pour les noms des attributs et une autre pour le nombre de données non nulles correspondant à chaque attribut
     attributs_names = []
     non_null_counts = []
+    total_counts = []
+    
+    # Parcourir les attributs pour compter les données non nulles et le nombre total de données
     for attribut in attributs_test:
         attributs_names.append(attribut)
-        non_null_counts.append(equipements_famille[attribut].notna().sum())
+        non_null_count = equipements_famille[attribut].notna().sum()
+        total_count = len(equipements_famille)
+        non_null_counts.append(non_null_count)
+        total_counts.append(total_count)
     
 
     fig = go.Figure()
