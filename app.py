@@ -129,7 +129,7 @@ def analyse_equipements():
     grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
     
     # Créer l'histogramme avec Plotly pour le graphique fig1
-    fig1 = px.bar(grouped_df, y='Code superviseur', x='Nombre d\'équipements', title="Code Superviseur", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'], orientation='h')
+    fig1 = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Code Superviseur", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'])
 
     
     # Modifier la mise en page du graphique fig1
