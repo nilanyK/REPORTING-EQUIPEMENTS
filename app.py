@@ -140,14 +140,13 @@ def analyse_equipements():
     
     # Modifier la mise en page du graphique fig2
     fig2.update_layout(xaxis_title="Lot", yaxis_title="Nombre d'Équipements")
-
-
     
-    st.plotly_chart(fig1)
-    
-    st.plotly_chart(fig2)
-    
-    
+    # Afficher les histogrammes côte à côte dans deux colonnes
+    col1, col2 = st.columns(2)
+    with col1:
+        st.plotly_chart(fig1, use_container_width=True)
+    with col2:
+        st.plotly_chart(fig2, use_container_width=True)
 
     # Calculate the number of inactifs_hors_contrat and inactifs_non_hors_contrat
     inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
@@ -172,7 +171,7 @@ def analyse_equipements():
     # Création d'un tableau interactif
     st.write("Liste des Équipements de sites inactifs non Hors Contrat")
     st.dataframe(df_filtered_columns.reset_index(drop=True))
-    
+
 
 def code_famille():
     # Add a subtitle
