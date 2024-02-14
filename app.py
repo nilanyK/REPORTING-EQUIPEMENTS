@@ -74,7 +74,7 @@ with open('mapping_lot_dict.json', 'r') as f:
 equipements_df['Lot'] = equipements_df['Code superviseur'].map(mapping_dict_lot)
     
 # Construct the full path for the image file
-image_file_path = script_directory / 'lpi.png'
+image_file_path = script_directory / 'LaPosteImmobilier_Logo_VersionEnLigne_RVB.png'
 image = Image.open(image_file_path)
 
 # Desired width for the image
