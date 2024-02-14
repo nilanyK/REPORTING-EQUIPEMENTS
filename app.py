@@ -93,8 +93,7 @@ with open('mapping_lot_dict.json', 'r') as f:
     mapping_dict_lot = json.load(f)
 
 equipements_df['Lot'] = equipements_df['Code superviseur'].map(mapping_dict_lot)
-# Créer une colonne "Code superviseur - Lot" en concaténant les valeurs des colonnes "Code superviseur" et "Lot"
-equipements_df['Code superviseur - Lot'] = equipements_df.apply(lambda x: f"{x['Code superviseur']} - {x['Lot']}", axis=1)
+
 
     
 # Construct the full path for the image file
@@ -127,14 +126,14 @@ def analyse_equipements():
     filtered_df = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')]
     
     # Grouper par Code superviseur et compter le nombre d'équipements
-    grouped_df = filtered_df.groupby('Code superviseur - Lot').size().reset_index(name='Nombre d\'équipements')
+    grouped_df = filtered_df.groupby('Code superviseur').size().reset_index(name='Nombre d\'équipements')
     
     # Créer l'histogramme avec Plotly pour le graphique fig1
-    fig1 = px.bar(grouped_df, y='Code superviseur - Lot', x='Nombre d\'équipements', title="Code Superviseur / Lot", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'], orientation='h')
+    fig1 = px.bar(grouped_df, y='Code superviseur', x='Nombre d\'équipements', title="Code Superviseur / Lot", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'], orientation='h')
 
     
     # Modifier la mise en page du graphique fig1
-    fig1.update_layout(xaxis_title="Code Superviseur - Lot", yaxis_title="Nombre d'Équipements")
+    fig1.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
     
     # Calculate the number of inactifs_hors_contrat and inactifs_non_hors_contrat
     inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
