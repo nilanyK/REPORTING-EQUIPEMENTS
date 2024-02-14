@@ -93,7 +93,7 @@ with open('mapping_lot_dict.json', 'r') as f:
     mapping_dict_lot = json.load(f)
 
 with open('mapping_MTK.json', 'w') as f:
-    json.dump(mapping_mtk_dict, f)
+    mapping_mtk_dict = json.load(f)
 
 
 equipements_df['MTK'] = equipements_df['Code superviseur'].map(mapping_mtk_dict)
