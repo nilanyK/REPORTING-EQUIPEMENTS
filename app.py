@@ -57,6 +57,11 @@ h2 {
     color: #36bc7b; /* Adjusted to match the color in the uploaded image */
     font-size: 1em; /* You can adjust the size if necessary */
 }
+.sidebar .sidebar-content {
+            background-color: #36bc7b;
+            font-family: Montserrat;
+            color: white;
+        }
 </style>
 """
 
@@ -91,7 +96,7 @@ image = image.resize((new_width, new_height))
 # Display the image in Streamlit
 st.image(image)
 
-# Sidebar with terms 
+# Contenu de la barre latérale avec des onglets
 selected_term = st.sidebar.radio("Onglets",["Sites inactifs & Hors-Contrat","Code Famille"])
 
 # Set app title
