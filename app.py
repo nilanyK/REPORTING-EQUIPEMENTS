@@ -90,7 +90,7 @@ image = image.resize((new_width, new_height))
 st.image(image)
 
 # Sidebar with terms 
-selected_term = st.sidebar.radio("Onglets : ", ["Sites inactifs & Hors-Contrat","Code Famille"])
+selected_term = st.sidebar.radio(["Sites inactifs & Hors-Contrat","Code Famille"])
 
 # Set app title
 st.title("Dashboard Equipements")
