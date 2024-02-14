@@ -59,9 +59,9 @@ h2 {
 }
 .sidebar .sidebar-content {
             background-color: #36bc7b;
-            font-family: Montserrat;
+            font-family: Montserrat, sans-serif;
             color: white;
-        }
+}
 </style>
 """
 
