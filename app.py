@@ -57,11 +57,25 @@ h2 {
     color: #36bc7b; /* Adjusted to match the color in the uploaded image */
     font-size: 1em; /* You can adjust the size if necessary */
 }
-.sidebar.sidebar-content {
+/* Largeur de la barre latérale */
+.sidebar .sidebar-content {
+            width: 300px;
             background-color: #36bc7b;
-            font-family: Montserrat, sans-serif;
             color: white;
+            font-family: 'Montserrat', sans-serif;
 }
+/* Style des onglets */
+.sidebar .sidebar-content .sidebar-list {
+            padding-top: 20px;
+}
+.sidebar .sidebar-content .sidebar-list .sidebar-item {
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+}
+.sidebar .sidebar-content .sidebar-list .sidebar-item:hover {
+background-color: #2c8e5d;
+        }
 </style>
 """
 
