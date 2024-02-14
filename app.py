@@ -214,11 +214,18 @@ def code_famille():
         attributs_names.append(attribut)
         non_null_counts.append(equipements_famille[attribut].notna().sum())
     
-    fig_hist = go.Figure([go.Bar(x=attributs_names, y=non_null_counts, marker_color=colors[0])])
-    fig_hist.update_xaxes(title_text='Attributs')
-    fig_hist.update_yaxes(title_text='Nombre de valeurs renseignées')
-    fig_hist.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test))
-    st.plotly_chart(fig_hist)
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(x=attributs_names, y=non_null_counts, name='Renseigné', marker_color='#36bc7b'))
+    fig.add_trace(go.Bar(x=attributs_names, y=[total - non_null for total, non_null in zip(total_counts, non_null_counts)], name='Non renseigné', marker_color='#00573F'))
+    
+    # Ajouter des informations sur l'axe x et y ainsi que le titre du graphique
+    fig.update_xaxes(title_text='Attributs')
+    fig.update_yaxes(title_text='Nombre de valeurs')
+    fig.update_layout(title='Nombre de données renseignées pour le code famille {}'.format(code_famille_test),
+                      barmode='stack')
+    
+    st.plotly_chart(fig)
     
     # Créer un pie chart pour chaque attribut avec Plotly
     st.markdown("<h2>Pourcentage de valeurs renseignées par attribut</h2>", unsafe_allow_html=True)
