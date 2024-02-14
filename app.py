@@ -118,7 +118,7 @@ st.title("Dashboard Equipements")
 
 def analyse_equipements():
     # Add a subtitle
-    st.markdown("<h2>Analyse des équipements</h2>", unsafe_allow_html=True)
+    st.markdown("<h2>Analyse des équipements de site inactifs dont le statut n'est pas hors contrat</h2>", unsafe_allow_html=True)
     
     # Filtrer les données selon les conditions spécifiées
     filtered_df = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')]
@@ -130,24 +130,11 @@ def analyse_equipements():
     grouped_df_lot = filtered_df.groupby('Lot').size().reset_index(name='Nombre d\'équipements')
 
     # Créer l'histogramme avec Plotly pour le graphique fig1
-    fig1 = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat par Code Superviseur", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'])
+    fig1 = px.bar(grouped_df, x='Code superviseur', y='Nombre d\'équipements', title="Code Superviseur / Lot", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#00573F'])
     
     # Modifier la mise en page du graphique fig1
-    fig1.update_layout(xaxis_title="Code Superviseur", yaxis_title="Nombre d'Équipements")
+    fig1.update_layout(xaxis_title="Code Superviseur / L", yaxis_title="Nombre d'Équipements")
     
-    # Créer l'histogramme avec Plotly pour le graphique fig2
-    fig2 = px.bar(grouped_df_lot, x='Lot', y='Nombre d\'équipements', title="Nombre d'équipements de site inactifs dont le statut n'est pas hors contrat par Lot", labels={"Code superviseur": "Code Superviseur", "Nombre d'équipements": "Nombre d'Équipements"}, color_discrete_sequence=['#36bc7b'])
-    
-    # Modifier la mise en page du graphique fig2
-    fig2.update_layout(xaxis_title="Lot", yaxis_title="Nombre d'Équipements")
-    
-    # Afficher les histogrammes côte à côte dans deux colonnes
-    col1, col2 = st.columns(2)
-    with col1:
-        st.plotly_chart(fig1, use_container_width=True)
-    with col2:
-        st.plotly_chart(fig2, use_container_width=True)
-
     # Calculate the number of inactifs_hors_contrat and inactifs_non_hors_contrat
     inactifs_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] == 'Hors Contrat')].shape[0]
     inactifs_non_hors_contrat = equipements_df[(equipements_df['statut_site'] == 'inactif') & (equipements_df['Libelle statut'] != 'Hors Contrat')].shape[0]
@@ -157,10 +144,19 @@ def analyse_equipements():
     values = [inactifs_hors_contrat, inactifs_non_hors_contrat]
     
     # Création du camembert avec Plotly
-    fig = px.pie(names=labels, values=values, title="Répartition des Équipements des Sites Inactifs", color_discrete_sequence=['#00573F', '#36bc7b'])
+    fig2 = px.pie(names=labels, values=values, title="Répartition des Équipements des Sites Inactifs", color_discrete_sequence=['#00573F', '#36bc7b'])
     
     # Affichage du camembert
     st.plotly_chart(fig)
+    
+    
+    # Afficher les histogrammes côte à côte dans deux colonnes
+    col1, col2 = st.columns(2)
+    with col1:
+        st.plotly_chart(fig1, use_container_width=True)
+    with col2:
+        st.plotly_chart(fig2, use_container_width=True)
+
     
     # Vous pouvez également modifier les couleurs du tableau interactif si nécessaire
     # Sélection des colonnes spécifiques par leur indice
