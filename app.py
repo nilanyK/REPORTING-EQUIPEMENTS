@@ -146,8 +146,7 @@ def analyse_equipements():
     # Création du camembert avec Plotly
     fig2 = px.pie(names=labels, values=values, title="Répartition des Équipements des Sites Inactifs", color_discrete_sequence=['#00573F', '#36bc7b'])
     
-    # Affichage du camembert
-    st.plotly_chart(fig)
+
     
     
     # Afficher les histogrammes côte à côte dans deux colonnes
