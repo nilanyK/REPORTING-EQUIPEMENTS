@@ -37,6 +37,7 @@ equipements_df = read_and_concat_chunks()
 # Convertir la colonne 'Code batiment' en type de données objet (str)
 equipements_df['Code batiment'] = equipements_df['Code batiment'].astype(str)
 equipements_df['IRSI'] = equipements_df['IRSI'].astype(str)
+equipements_df['IRSI'] = equipements_df['IRSI'].str.replace('.0', '')
 
 
 # Custom CSS to inject fonts and colors
