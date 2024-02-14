@@ -83,7 +83,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 st.title("Dashboard Equipements")
 
 # Divide the page into two columns
-col1, col2 = st.beta_columns([1, 2])
+col1, col2 = st.columns([1, 2])
 
 # Display logo in the first column
 with col1:
