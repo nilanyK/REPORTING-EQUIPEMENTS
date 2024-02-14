@@ -172,7 +172,7 @@ def code_famille():
     # Afficher les colonnes spécifiées
     st.dataframe(equipements_famille_selected.reset_index(drop=True))
     
-    colors = ['#00573F', '#36bc7b']
+    colors = ['#36bc7b','#00573F']
 
     # Créer un histogramme avec Plotly
     attributs_names = []
