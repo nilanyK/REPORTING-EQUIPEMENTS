@@ -92,7 +92,7 @@ with open('mapping_dict.json', 'r') as f:
 with open('mapping_lot_dict.json', 'r') as f:
     mapping_dict_lot = json.load(f)
 
-with open('mapping_MTK.json', 'w') as f:
+with open('mapping_MTK.json', 'r') as f:
     mapping_mtk_dict = json.load(f)
 
 
