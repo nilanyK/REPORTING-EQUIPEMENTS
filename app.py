@@ -92,6 +92,12 @@ with open('mapping_dict.json', 'r') as f:
 with open('mapping_lot_dict.json', 'r') as f:
     mapping_dict_lot = json.load(f)
 
+with open('mapping_MTK.json', 'w') as f:
+    json.dump(mapping_mtk_dict, f)
+
+
+equipements_df['MTK'] = equipements_df['Code superviseur'].map(mapping_mtk_dict)
+
 equipements_df['Lot'] = equipements_df['Code superviseur'].map(mapping_dict_lot)
 
 
@@ -177,6 +183,20 @@ def code_famille():
     
     # Filtrer les données du DataFrame sur le code famille sélectionné
     equipements_famille = equipements_df[equipements_df['Code famille'] == code_famille_test]
+
+    # Filtrer par Lot (si l'utilisateur le souhaite)
+    if st.checkbox("Filtrer par Lot"):
+        lot_options = equipements_famille['Lot'].unique().tolist()
+        lot_selected = st.selectbox("Choisissez un Lot :", [''] + lot_options)
+        if lot_selected:
+            equipements_famille = equipements_famille[equipements_famille['Lot'] == lot_selected]
+    
+    # Filtrer par MTK (si l'utilisateur le souhaite)
+    if st.checkbox("Filtrer par MTK"):
+        mtk_options = equipements_famille['MTK'].unique().tolist()
+        mtk_selected = st.selectbox("Choisissez un MTK :", [''] + mtk_options)
+        if mtk_selected:
+            equipements_famille = equipements_famille[equipements_famille['MTK'] == mtk_selected]
     
     # Sélectionner les colonnes spécifiées par leur index
     colonnes_indices = [0, 1, 2, 3, 6, 7, 8, 9, 12, 19]  # Index des colonnes A, B, C, D, G, H, I, J, M, T
@@ -210,6 +230,7 @@ def code_famille():
         fig = go.Figure(data=[go.Pie(labels=labels, values=values, marker_colors=colors)])
         fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
         st.plotly_chart(fig)
+
 
 
 
