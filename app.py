@@ -122,7 +122,7 @@ st.image(image)
 selected_term = st.sidebar.radio("Onglets",["Sites inactifs & Hors-Contrat","Code Famille"])
 
 # Set app title
-st.title("Reporting Equipements")
+st.title("Reporting Équipements")
 
 def analyse_equipements():
     # Add a subtitle
