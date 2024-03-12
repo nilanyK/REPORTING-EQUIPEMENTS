@@ -25,7 +25,7 @@ def read_and_concat_chunks():
         csv_file_path = script_directory / f'data_chunk_{file_index}.csv'
 
         # Read the CSV chunk into a DataFrame
-        chunk_df = pd.read_csv(csv_file_path, encoding = 'utf-8')
+        chunk_df = pd.read_csv(csv_file_path)
 
         # Concatenate the chunk to the combined DataFrame
         combined_df = pd.concat([combined_df, chunk_df], ignore_index=True)
