@@ -262,6 +262,7 @@ def code_famille():
 
 
 
+
 # Call the corresponding function based on the selected term
 if selected_term == "Sites inactifs & Hors-Contrat":
     analyse_equipements()
