@@ -204,14 +204,7 @@ def code_famille():
         libelle_statut_selected = st.selectbox("Choisissez un Libelle statut :", [''] + libelle_statut_options)
         if libelle_statut_selected:
             equipements_famille = equipements_famille[equipements_famille['Libelle statut'] == libelle_statut_selected]
-"""
-    # Filtrer par Equipement réglementaire (si l'utilisateur le souhaite)
-    if st.checkbox("Filtrer par Equipement réglementaire"):
-        equipement_reglementaire_options = equipements_famille['Equipement rÃ¨glementaire'].unique().tolist()
-        equipement_reglementaire_selected = st.selectbox("Choisissez un Equipement réglementaire :", [''] + equipement_reglementaire_options)
-        if equipement_reglementaire_selected:
-            equipements_famille = equipements_famille[equipements_famille['Equipement rÃ¨glementaire'] == equipement_reglementaire_selected]
-"""
+
     # Filtrer par Niveau Equipement1 (si l'utilisateur le souhaite)
     if st.checkbox("Filtrer par Niveau Equipement1"):
         niveau_equipement1_options = equipements_famille['Niveau Equipement1'].unique().tolist()
