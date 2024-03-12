@@ -197,6 +197,27 @@ def code_famille():
         mtk_selected = st.selectbox("Choisissez un MTK :", [''] + mtk_options)
         if mtk_selected:
             equipements_famille = equipements_famille[equipements_famille['MTK'] == mtk_selected]
+
+    # Filtrer par Libelle statut (si l'utilisateur le souhaite)
+    if st.checkbox("Filtrer par Libelle statut"):
+        libelle_statut_options = equipements_famille['Libelle statut'].unique().tolist()
+        libelle_statut_selected = st.selectbox("Choisissez un Libelle statut :", [''] + libelle_statut_options)
+        if libelle_statut_selected:
+            equipements_famille = equipements_famille[equipements_famille['Libelle statut'] == libelle_statut_selected]
+
+    # Filtrer par Equipement réglementaire (si l'utilisateur le souhaite)
+    if st.checkbox("Filtrer par Equipement réglementaire"):
+        equipement_reglementaire_options = equipements_famille['Equipement réglementaire'].unique().tolist()
+        equipement_reglementaire_selected = st.selectbox("Choisissez un Equipement réglementaire :", [''] + equipement_reglementaire_options)
+        if equipement_reglementaire_selected:
+            equipements_famille = equipements_famille[equipements_famille['Equipement réglementaire'] == equipement_reglementaire_selected]
+
+    # Filtrer par Niveau Equipement1 (si l'utilisateur le souhaite)
+    if st.checkbox("Filtrer par Niveau Equipement1"):
+        niveau_equipement1_options = equipements_famille['Niveau Equipement1'].unique().tolist()
+        niveau_equipement1_selected = st.selectbox("Choisissez un Niveau Equipement1 :", [''] + niveau_equipement1_options)
+        if niveau_equipement1_selected:
+            equipements_famille = equipements_famille[equipements_famille['Niveau Equipement1'] == niveau_equipement1_selected]
     
     # Sélectionner les colonnes spécifiées par leur index
     colonnes_indices = [0, 1, 2, 3, 6, 7, 8, 9, 12, 19]  # Index des colonnes A, B, C, D, G, H, I, J, M, T
@@ -243,6 +264,7 @@ def code_famille():
         fig = go.Figure(data=[go.Pie(labels=labels, values=values, marker_colors=colors)])
         fig.update_layout(title='Pourcentage de valeurs renseignées pour l\'attribut {}'.format(attribut))
         st.plotly_chart(fig)
+
 
 
 
